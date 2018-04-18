@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>#1 Simple state Binding</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+
+    <h2>#1.1 Simple state Binding</h2>
+
+    <strong>State</strong>
+    <pre>
+        <code>
+    const state = {
+        firstname: 'Aurélien',
+        lastname: 'Loyer',
+        job: 'Zenika'
+    }
+        </code>
+    </pre>
+
+    <strong>Result</strong>
+
+    <div class="app">
+        <p data-value="job"></p>
+        <p data-value="firstname"></p>
+        <p data-value="lastname"></p>
+    </div>
+
+    <script>
+
+        const state = {
+            firstname: 'Aurélien',
+            lastname: 'Loyer',
+            job: 'Zenika'
+        }
+
+        const app = document.querySelector('.app');
+
+        function bind(app, state) {
+            var elements = app.querySelectorAll('[data-value]');
+            elements.forEach((element) => {
+                let key = element.getAttribute('data-value');
+                let value = state[key];
+                updateElement(element,value);
+                // and define set for next object update
+                Object.defineProperty(state, key, { set: function (newValue) { updateElement(element, newValue); } });
+            });
+        }
+
+        function updateElement(element, value) {
+            element.innerText = value;
+        }
+
+        bind(app, state);
+
+    </script>
+
+</body>
+
+</html>
