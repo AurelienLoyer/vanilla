@@ -8,10 +8,10 @@ Aujourd’hui tout le monde connait les frameworks Angular, React Vuejs, mais sa
 
 ## Plan
 
-1. Binding
-2. Templating
-3. Event Listener
-4. Routing 
+- [ ] Binding : data-model='monModel'
+- [ ] Templating : <div>{{title}}<div>
+- [ ] EventListener : on-clic='clickHandler'
+- [ ] Routing 
 
 
 **(OPTIONNAL ?)**
