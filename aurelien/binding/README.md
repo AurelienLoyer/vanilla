@@ -1,12 +1,15 @@
 # BINDING
 
-```html
-<div data-value="data.lool"></div>
-```
+## MENU
+
+* [Simplae state binding](01-simple-state-binding.html)
+* [Complex state binding](02-complex-state-binding.html)
+* [Generic binding](03-generic-binding.html)
+* [Interpolation](04-interpolation.html)
 
 ## STEPS
 
-find data-* || z-bind:* impossible -> regarder dans les specs
+find data-_ || z-bind:_ impossible -> regarder dans les specs
 
 ### One way
 
@@ -15,6 +18,7 @@ find data-* || z-bind:* impossible -> regarder dans les specs
 ### Proxy
 
 Exemple
+
 ```js
 var p = new Proxy(cible, gestionnaire);
 ```
@@ -24,6 +28,7 @@ var p = new Proxy(cible, gestionnaire);
 ### Mutation Observer
 
 Exemple
+
 ```js
 new MutationObserver( function callback );
 ```
