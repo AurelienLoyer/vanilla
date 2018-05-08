@@ -6,6 +6,8 @@
 
 ## STEPS
 
+find data-* || z-bind:* impossible -> regarder dans les specs
+
 ### One way
 
 ### Two way
