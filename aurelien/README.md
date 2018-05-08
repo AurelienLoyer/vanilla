@@ -7,5 +7,5 @@
 
 ## Lib
 
-* [Vue.js](lib/vuejs.)
+* [Vue.js](lib/vue.js)
 * [Angular.js](lib/angular.js)

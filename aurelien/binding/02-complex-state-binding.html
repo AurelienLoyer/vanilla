@@ -3,82 +3,29 @@
 
 <head>
     <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>#1 Simple state Binding</title>
+    <title>#1 Simple state binding</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
 </head>
 
 <body>
 
-    <h2>#1.2 Complex state Binding</h2>
-
-    <strong>State</strong>
-    <pre>
-        <code>
-    const state = {
-        user: {
-            firstname: 'Aurélien',
-            lastname: 'Loyer',
-            jobs: [
-                'Zenika Lille',
-                'Zenika Montreal'
-            ]
-        },
-        title: 'Présentation'
-    }
-        </code>
-    </pre>
+    <h2>#1 Simple state binding</h2>
 
     <strong>Result</strong>
 
     <div class="app">
-        <h3 data-value="title"></h3>
-        <p data-value="user.jobs[1]"></p>
-        <p data-value="user.firstname"></p>
-        <p data-value="user.lastname"></p>
+        <h3></h3>
+        <div>
+            <p z-test="nope" z-bind:title="user.job[1]">test title</p>
+            <input z-bind:title="user.lastname" z-bind:value="user.firstname" />
+            <input z-bind:title="user.lastname" z-bind:value="user.firstname" />
+            <p>
+                <img :alt="user.lastname" z-bind:height="height" z-bind:title="user.lastname" z-bind:src="picture"></img>
+            </p>
+        </div>
     </div>
 
-    <script>
-        const state = {
-            user: {
-                firstname: 'Aurélien',
-                lastname: 'Loyer',
-                jobs: [
-                    'Zenika Lille',
-                    'Zenika Montreal'
-                ]
-            },
-            title: 'Présentation'
-        }
-
-        const app = document.querySelector('.app');
-
-        function getStateValue(state, key) {
-            console.log(state);
-            console.log(key);
-            return state[key];
-        }
-        
-        function bind(app, state) {
-            var elements = app.querySelectorAll('[data-value]');
-            elements.forEach((element) => {
-                let key = element.getAttribute('data-value');
-                let value = getStateValue(state, key);
-                updateElement(element,value);
-                // and define setter for next object update
-                Object.defineProperty(state, key, { set: function (newValue) { updateElement(element, newValue); } });
-            });
-        }
-
-        function updateElement(element, value) {
-            element.innerText = value;
-        }
-
-        bind(app, state);
-
-    </script>
-
+    <script src="js/01.js"></script>
 </body>
 
 </html>
