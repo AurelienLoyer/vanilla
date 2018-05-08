@@ -10,20 +10,7 @@
 
 <body>
 
-    <h2>#1.1 Simple state Binding</h2>
-
-    <strong>State</strong>
-    <pre>
-        <code>
-    const state = {
-        firstname: 'Aurélien',
-        lastname: 'Loyer',
-        job: 'Zenika'
-    }
-        </code>
-    </pre>
-
-    <strong>Result</strong>
+    <h2>#1 Simple state Binding</h2>
 
     <div class="app">
         <p data-value="job"></p>
@@ -31,34 +18,7 @@
         <p data-value="lastname"></p>
     </div>
 
-    <script>
-
-        const state = {
-            firstname: 'Aurélien',
-            lastname: 'Loyer',
-            job: 'Zenika'
-        }
-
-        const app = document.querySelector('.app');
-
-        function bind(app, state) {
-            var elements = app.querySelectorAll('[data-value]');
-            elements.forEach((element) => {
-                let key = element.getAttribute('data-value');
-                let value = state[key];
-                updateElement(element,value);
-                // and define set for next object update
-                Object.defineProperty(state, key, { set: function (newValue) { updateElement(element, newValue); } });
-            });
-        }
-
-        function updateElement(element, value) {
-            element.innerText = value;
-        }
-
-        bind(app, state);
-
-    </script>
+    <script src="js/01.js"></script>
 
 </body>
 
