@@ -8918,7 +8918,7 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
           }
         }
 
-        // fire observers
+        // fire attributesObservers
         var $$observers = this.$$observers;
         if ($$observers) {
           forEach($$observers[observer], function(fn) {
@@ -10501,7 +10501,7 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
                 }
 
                 // if attribute was updated so that there is no interpolation going on we don't want to
-                // register any observers
+                // register any attributesObservers
                 if (!interpolateFn) return;
 
                 // initialize attr object so that it's ready in case we need the value for isolate
@@ -17547,7 +17547,7 @@ function $$RAFProvider() { //rAF
  * Child scopes are created and removed often
  *   - Using an array would be slow since inserts in the middle are expensive; so we use linked lists
  *
- * There are fewer watches than observers. This is why you don't want the observer to be implemented
+ * There are fewer watches than attributesObservers. This is why you don't want the observer to be implemented
  * in the same way as watch. Watch requires return of the initialization function which is expensive
  * to construct.
  */
@@ -33312,7 +33312,7 @@ var SelectController =
         self.selectValueMap[hashedVal] = newVal;
         self.addOption(newVal, optionElement);
         // Set the attribute directly instead of using optionAttrs.$set - this stops the observer
-        // from firing a second time. Other $observers on value will also get the result of the
+        // from firing a second time. Other $attributesObservers on value will also get the result of the
         // ngValue expression, not the hashed value
         optionElement.attr('value', hashedVal);
 

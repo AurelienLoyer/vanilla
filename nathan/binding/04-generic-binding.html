@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:z-bind="http://www.w3.org/1999/xhtml">
+
+<head>
+  <meta charset="utf-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>#3 Generic Binding</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+
+<h2>#4 Generic Binding</h2>
+
+<strong>Result</strong>
+
+<div class="app" id="app" z-bind:title="toto">
+  <h3></h3>
+  <div>
+    <p z-test="nope" z-bind:title="firstname">test title</p>
+    <input z-bind:value="firstname" z-bind:title="lastname"/>
+    <input z-bind:value="firstname" z-bind:title="lastname"/><br/>
+
+    <input z-bind:value="firstname" z-bind:title="lastname"/>
+    <input z-bind:title="firstname" z-bind:value="lastname"/><br/>
+
+    <input z-bind:title="firstname" z-bind:value="lastname"/>
+    <input z-bind:title="lastname" z-bind:value="firstname"/><br/>
+    <p>
+      <img z-bind:height="height" z-bind:title="lastname" z-bind:src="picture"/>
+    </p>
+  </div>
+</div>
+
+<script src="5.js">
+
+</script>
+<script>
+
+    let state = {
+        title: "Test deqsdqsd titre",
+        firstname: "Auqsdrélien",
+        lastname: "Loyqsder",
+        job: "Miaouuqsdu",
+        height: "100px",
+        picture: "https://i.ytimg.com/vi/wT7xL5oq1Jg/hqdefault.jpg"
+    }
+    state = bind(state, document.getElementById('app'));
+
+    //
+    //    document.addEventListener("DOMContentLoaded", () => {
+    //        const root = document.querySelector(".app");
+    //        new App(root, state).bind();
+    //    })
+</script>
+</body>
+
+</html>
