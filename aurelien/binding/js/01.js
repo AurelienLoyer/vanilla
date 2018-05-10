@@ -1,64 +1,63 @@
-class app {
-  constructor(app, state) {
-    this.app = app;
-    this.state = state;
-    this._state = Object.assign({}, state);
-    this.bindPattern = "z-bind:";
-    this.bindSugarPattern = ":";
-    this.regex = new RegExp(`\^${this.bindPattern}|${this.bindSugarPattern}`);
-    this.stateElements = {};
-  }
+var App = function(app, state) {
+  const _state = Object.assign({}, state);
+  const stateElements = {};
+  const bindPattern = "z-bind:";
+  const bindSugarPattern = ":";
+  const regex = new RegExp(`\^${bindPattern}|${bindSugarPattern}`);
 
-  bind() {
-    const elements = this.app.querySelectorAll("*");
+  function bind() {
+    const elements = app.querySelectorAll("*");
 
     elements.forEach(element => {
       // NodeList collection
       Object.values(element.attributes).map(attribute => {
         // if attribute match pattern and value is specified
 
-        if (this.regex.test(attribute.localName) && attribute.specified) {
-          let attributeToUpdate = this.extractAttribute(attribute.localName);
-          let stateKey = attribute.value;
+        if (regex.test(attribute.localName) && attribute.specified) {
+          const attributeToUpdate = extractAttribute(attribute.localName);
+          const stateKey = attribute.value;
+          const stateValue = state[stateKey];
 
           element.removeAttribute(attribute.localName);
 
-          if (!Array.isArray(this.stateElements[stateKey]))
-            this.stateElements[stateKey] = [];
+          if (!Array.isArray(stateElements[stateKey]))
+            stateElements[stateKey] = [];
 
-          this.stateElements[stateKey].push(element);
+          stateElements[stateKey].push(element);
 
-          this.updateElementsAttribute(
-            this.stateElements[stateKey],
-            attributeToUpdate,
-            this.state[stateKey]
-          );
-
-          // and define set for next object update
-          Object.defineProperty(this.state, stateKey, {
-            set: newValue => {
-              this.updateElementsAttribute(
-                this.stateElements[stateKey],
-                attributeToUpdate,
-                this.newValue
+          // create setter and getter on local _data state to update element
+          const attributeHandler = {
+            get: () => {
+              return _state[stateKey];
+            },
+            set: val => {
+              elements.forEach(element =>
+                element.setAttribute(attributeToUpdate, val)
               );
+              _state[stateKey] = val;
             }
-          });
+          };
+
+          // add setter and getter to the state
+          Object.defineProperty(state, stateKey, attributeHandler);
+
+          // init the local _data state
+          state[stateKey] = stateValue;
         }
       });
     });
   }
 
-  extractAttribute(attributeName) {
-    attributeName = attributeName.replace(this.bindPattern, "");
-    attributeName = attributeName.replace(this.bindSugarPattern, "");
+  function extractAttribute(attributeName) {
+    attributeName = attributeName.replace(bindPattern, "");
+    attributeName = attributeName.replace(bindSugarPattern, "");
     return attributeName;
   }
 
-  updateElementsAttribute(elements, attributeToUpdate, value) {
-    elements.forEach(element => element.setAttribute(attributeToUpdate, value));
-  }
-}
+  return {
+    bind
+  };
+};
 
 const state = {
   title: "Test de titre",
@@ -70,4 +69,7 @@ const state = {
 };
 
 const root = document.querySelector(".app");
-const myapp = new app(root, state).bind();
+
+document.addEventListener("DOMContentLoaded", function(event) {
+  const myapp = new App(root, state).bind();
+});
