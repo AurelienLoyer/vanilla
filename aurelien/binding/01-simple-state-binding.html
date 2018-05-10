@@ -3,23 +3,29 @@
 
 <head>
     <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>#1 Simple state Binding</title>
+    <title>#1 Simple state binding</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 
 <body>
 
-    <h2>#1 Simple state Binding</h2>
+    <h2>#1 Simple state binding</h2>
+
+    <strong>Result</strong>
 
     <div class="app">
-        <p data-value="job"></p>
-        <p data-value="firstname"></p>
-        <p data-value="lastname"></p>
+        <h3></h3>
+        <div>
+            <p z-test="nope" z-bind:title="job">test title</p>
+            <input z-bind:title="lastname" z-bind:value="firstname" />
+            <input z-bind:title="lastname" z-bind:value="firstname" />
+            <p>
+                <img :alt="lastname" z-bind:height="height" z-bind:title="lastname" z-bind:src="picture"></img>
+            </p>
+        </div>
     </div>
 
     <script src="js/01.js"></script>
-
 </body>
 
 </html>

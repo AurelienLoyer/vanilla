@@ -2,7 +2,6 @@ class app {
   constructor(app, state) {
     this.app = app;
     this.state = state;
-    this._state = Object.assign({}, state);
     this.bindPattern = "z-bind:";
     this.bindSugarPattern = ":";
     this.regex = new RegExp(`\^${this.bindPattern}|${this.bindSugarPattern}`);
@@ -62,9 +61,11 @@ class app {
 
 const state = {
   title: "Test de titre",
-  firstname: "Aurélien",
-  lastname: "Loyer",
-  job: "Miaouuu",
+  user: {
+    firstname: "Aurélien",
+    lastname: "Loyer",
+    jobs: ["Zenika Lille", "Zenika Montreal"]
+  },
   height: "100px",
   picture: "https://i.ytimg.com/vi/wT7xL5oq1Jg/hqdefault.jpg"
 };
