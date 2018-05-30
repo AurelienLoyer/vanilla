@@ -1,65 +1,85 @@
-var App = function(app, state) {
-  const regex = /{{2}(.*?)\}{2}/gis;
-  const stateElements = {};
+const regex = /{{2}(.*?)\}{2}/gis;
+const attributesObservers = {};
+const stateElements = {};
 
-  function bind() {
-    const elements = app.querySelectorAll("*");
-
-    elements.forEach(element => {
-      // NodeList collection
-      element.childNodes.forEach(childnode => {
-        let m;
-
-        while ((m = regex.exec(childnode.nodeValue)) !== null) {
-          // This is necessary to avoid infinite loops with zero-width matches
-          if (m.index === regex.lastIndex) {
-            regex.lastIndex++;
-          }
-
-          let fullMatch;
-          let stateKey;
-
-          // The result can be accessed through the `m`-variable.
-          m.forEach((match, groupIndex) => {
-            if (groupIndex === 0) {
-              fullMatch = match;
-            } else {
-              stateKey = match.trim();
-            }
-          });
-
-          if (!Array.isArray(stateElements[stateKey]))
-            stateElements[stateKey] = [];
-
-          stateElements[stateKey].push({
-            node: childnode,
-            fullMatch
-          });
-        }
-
-        Object.keys(stateElements).forEach(key => {
-          stateElements[key].forEach(el => {
-            updateNode(el.node, el.fullMatch, key);
-          });
-        });
-      });
+const handler = {
+  apply: (target, that, args) => {},
+  get: (target, attribute, proxy) => {
+    return this._data[attribute];
+  },
+  set: (target, key, value, proxy) => {
+    this._data[key] = value;
+    stateElements[key].forEach(toto => {
+      updateNode(toto.node, toto.initialValue);
     });
   }
+};
 
-  function updateNode(node, fullMatch, key) {
-    node.nodeValue = node.nodeValue.replace(fullMatch, state[key]);
+function bind(data, app) {
+  this._data = data;
+  initObserver(app, data);
+  return new Proxy(data, handler);
+}
+
+function updateNode(node, template) {
+  const toRename = extractMatchFromString(template);
+  toRename.forEach(el => {
+    template = template.replace(el.fullMatch, this._data[el.stateKey])
+    node.nodeValue = template;
+  });
+}
+
+function extractMatchFromString(string) {
+  let m;
+  let matchs = [];
+  while ((m = regex.exec(string)) !== null) {
+
+    if (m.index === regex.lastIndex) {
+      regex.lastIndex++;
+    }
+
+    let fullMatch;
+    let stateKey;
+
+    m.forEach((match, groupIndex) => {
+      if (groupIndex === 0) {
+        fullMatch = match;
+      } else {
+        stateKey = match.trim();
+      }
+    });
+
+    matchs.push({
+      fullMatch,
+      stateKey
+    })
   }
 
-  return {
-    bind
-  };
-};
+  return matchs;
+}
 
-const state = {
-  firstname: "Aurélien",
-  lastname: "Loyer",
-  job: "Zenika"
-};
+function addToStateElements(match, childnode) {
+  if (!Array.isArray(stateElements[match.stateKey]))
+        stateElements[match.stateKey] = [];
 
-const root = document.querySelector(".app");
-const myapp = new App(root, state).bind();
+  stateElements[match.stateKey].push({
+    node: childnode,
+    initialValue: childnode.nodeValue,
+  });
+}
+
+function initObserver(app, state) {
+  const flatChildren = app.querySelectorAll("*");
+
+  flatChildren.forEach(element => {
+
+    element.childNodes.forEach(childnode => {
+
+      const toRename = extractMatchFromString(childnode.nodeValue);
+      
+      toRename.forEach(el => addToStateElements(el, childnode))
+      toRename.forEach(el => updateNode(childnode, childnode.nodeValue))
+        
+    });
+  });
+}

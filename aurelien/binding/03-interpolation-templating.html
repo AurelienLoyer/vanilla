@@ -11,15 +11,32 @@
 
     <h2>#4 Interpolation / Templating</h2>
 
-    <div class="app">
+    <div id="app">
         <section>
             Bonjour {{ firstname }} {{ lastname }}
             <br>Vous travaillez toujours chez
             <strong>{{ job }}</strong> ?
         </section>
+        <section>
+            <p>
+                Deuxieme ligne : {{ firstname }} {{ lastname }}
+            </p>
+        </section>
     </div>
 
     <script src="js/03.js"></script>
+
+    <script>
+
+        let state = {
+            firstname: "Aurélien",
+            lastname: "Loyer",
+            job: "Zenika"
+        };
+
+        state = bind(state, document.getElementById('app'));
+
+    </script>
 
 </body>
 
