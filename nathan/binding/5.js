@@ -7,15 +7,19 @@ const handler = {
         return this._data[attribute];
     },
     set: (target, attribute, value, proxy) => {
-        console.log("set: ", target, attribute, value, proxy);
+        // console.log("set: ", target, attribute, value, proxy);
+        console.log("set: ", target);
+        console.log("set: ", attribute);
+        console.log("set: ", value);
+        console.log("set: ", proxy);
         this._data[attribute] = value;
-        this.updateComponent(attribute, value);
+        updateComponent(attribute, value);
     }
 };
 
 function bind(data, app) {
     this._data = data
-    this.updateComponent = updateComponent;
+    // this.updateComponent = updateComponent;
     initObserver(app, data)
     return new Proxy(data, handler)
 }
