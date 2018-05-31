@@ -9,8 +9,8 @@ const handler = {
   },
   set: (target, key, value, proxy) => {
     this._data[key] = value;
-    stateElements[key].forEach(toto => {
-      updateNode(toto.node, toto.initialValue);
+    stateElements[key].forEach(el => {
+      updateNode(el.node, el.initialValue);
     });
   }
 };
@@ -22,8 +22,8 @@ function bind(data, app) {
 }
 
 function updateNode(node, template) {
-  const toRename = extractMatchFromString(template);
-  toRename.forEach(el => {
+  const elementsToBind = extractMatchFromString(template);
+  elementsToBind.forEach(el => {
     template = template.replace(el.fullMatch, this._data[el.stateKey])
     node.nodeValue = template;
   });
@@ -75,10 +75,10 @@ function initObserver(app, state) {
 
     element.childNodes.forEach(childnode => {
 
-      const toRename = extractMatchFromString(childnode.nodeValue);
+      const elementsToBind = extractMatchFromString(childnode.nodeValue);
       
-      toRename.forEach(el => addToStateElements(el, childnode))
-      toRename.forEach(el => updateNode(childnode, childnode.nodeValue))
+      elementsToBind.forEach(el => addToStateElements(el, childnode))
+      elementsToBind.forEach(el => updateNode(childnode, childnode.nodeValue))
         
     });
   });

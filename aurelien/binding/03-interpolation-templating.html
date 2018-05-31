@@ -9,17 +9,18 @@
 
 <body>
 
-    <h2>#4 Interpolation / Templating</h2>
+    <h2>#3 Interpolation / Templating</h2>
 
     <div id="app">
         <section>
-            Bonjour {{ firstname }} {{ lastname }}
-            <br>Vous travaillez toujours chez
-            <strong>{{ job }}</strong> ?
+            Bonjour le {{ conference }} {{ lieux }}
+            <br>Demo JS super 
+            <strong>{{ truc }}</strong> ?
         </section>
         <section>
             <p>
-                Deuxieme ligne : {{ firstname }} {{ lastname }}
+                Par : {{ speaker1 }} de {{lieux}} <br>
+                Et : {{ speaker2}} de {{lieux}}
             </p>
         </section>
     </div>
@@ -29,9 +30,11 @@
     <script>
 
         let state = {
-            firstname: "Aurélien",
-            lastname: "Loyer",
-            job: "Zenika"
+            conference: "DevFest",
+            lieux: "Lille",
+            truc: "Cool",
+            speaker1: "Aurélien",
+            speaker2: "Nathan",
         };
 
         state = bind(state, document.getElementById('app'));
