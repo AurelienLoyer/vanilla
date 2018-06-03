@@ -1,7 +1,4 @@
 const handler = {
-    apply: (target, that, args) => {
-        console.log("apply: ", target, that, args);
-    },
     get: (target, attribute, proxy) => {
         console.log("get: ", target, attribute, proxy);
         return this._data[attribute];
@@ -9,13 +6,12 @@ const handler = {
     set: (target, attribute, value, proxy) => {
         console.log("set: ", target, attribute, value, proxy);
         this._data[attribute] = value;
-        this.updateComponent(attribute, value);
+        updateComponent(attribute, value);
     }
 };
 
 function bind(data, app) {
     this._data = data
-    this.updateComponent = updateComponent;
     initObserver(app, data)
     return new Proxy(data, handler)
 }

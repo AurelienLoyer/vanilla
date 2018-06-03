@@ -78,7 +78,7 @@ function initObserver(app, state) {
       const elementsToBind = extractMatchFromString(childnode.nodeValue);
       
       elementsToBind.forEach(el => addToStateElements(el, childnode))
-      elementsToBind.forEach(el => updateNode(childnode, childnode.nodeValue))
+      // elementsToBind.forEach(el => updateNode(childnode, childnode.nodeValue))
         
     });
   });

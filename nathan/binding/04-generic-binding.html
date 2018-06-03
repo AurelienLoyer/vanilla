@@ -12,7 +12,7 @@
 
 <h2>#4 Generic Binding</h2>
 
-<strong>Result</strong>
+<strong id="undefined">Result</strong>
 
 <div class="app" id="app" z-bind:title="toto">
   <h3></h3>
@@ -30,11 +30,21 @@
       <img z-bind:height="height" z-bind:title="lastname" z-bind:src="picture"/>
     </p>
   </div>
+
+  <section>
+    Bonjour {{ firstname }} {{ lastname }}
+    <br>Demo JS super
+    <strong>{{ job }}</strong> ?
+  </section>
+  <section>
+    <p>
+      Par : {{ height }} de {{height}} <br>
+      Et : {{ job}} de {{title}}
+    </p>
+  </section>
 </div>
 
-<script src="5.js">
-
-</script>
+<script src="6.js"></script>
 <script>
 
     let state = {
@@ -45,13 +55,8 @@
         height: "100px",
         picture: "https://i.ytimg.com/vi/wT7xL5oq1Jg/hqdefault.jpg"
     }
-    state = bind(state, document.getElementById('app'));
+    state = bindData(document.getElementById('app'), state);
 
-    //
-    //    document.addEventListener("DOMContentLoaded", () => {
-    //        const root = document.querySelector(".app");
-    //        new App(root, state).bind();
-    //    })
 </script>
 </body>
 
