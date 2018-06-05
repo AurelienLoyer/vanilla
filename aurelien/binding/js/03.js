@@ -24,7 +24,10 @@ function bind(data, app) {
 function updateNode(node, template) {
   const elementsToBind = extractMatchFromString(template);
   elementsToBind.forEach(el => {
-    template = template.replace(el.fullMatch, eval("this._data." + el.stateKey));
+    template = template.replace(
+      el.fullMatch,
+      eval("this._data." + el.stateKey)
+    );
     node.nodeValue = template;
   });
 }
@@ -32,39 +35,27 @@ function updateNode(node, template) {
 function extractMatchFromString(string) {
   let m;
   let matchs = [];
-  while ((m = regex.exec(string)) !== null) {
 
-    if (m.index === regex.lastIndex) {
-      regex.lastIndex++;
+  do {
+    m = regex.exec(string);
+    if (m) {
+      matchs.push({
+        fullMatch: m[0],
+        stateKey: m[1]
+      });
     }
-
-    let fullMatch;
-    let stateKey;
-
-    m.forEach((match, groupIndex) => {
-      if (groupIndex === 0) {
-        fullMatch = match;
-      } else {
-        stateKey = match.trim();
-      }
-    });
-
-    matchs.push({
-      fullMatch,
-      stateKey
-    })
-  }
+  } while (m);
 
   return matchs;
 }
 
 function addToStateElements(match, childnode) {
   if (!Array.isArray(stateElements[match.stateKey]))
-        stateElements[match.stateKey] = [];
+    stateElements[match.stateKey] = [];
 
   stateElements[match.stateKey].push({
     node: childnode,
-    initialValue: childnode.nodeValue,
+    initialValue: childnode.nodeValue
   });
 }
 
@@ -72,14 +63,11 @@ function initObserver(app, state) {
   const flatChildren = app.querySelectorAll("*");
 
   flatChildren.forEach(element => {
-
     element.childNodes.forEach(childnode => {
-
       const elementsToBind = extractMatchFromString(childnode.nodeValue);
-      
-      elementsToBind.forEach(el => addToStateElements(el, childnode))
-      elementsToBind.forEach(el => updateNode(childnode, childnode.nodeValue))
-        
+
+      elementsToBind.forEach(el => addToStateElements(el, childnode));
+      elementsToBind.forEach(el => updateNode(childnode, childnode.nodeValue));
     });
   });
 }
