@@ -24,7 +24,7 @@ function bind(data, app) {
 function updateNode(node, template) {
   const elementsToBind = extractMatchFromString(template);
   elementsToBind.forEach(el => {
-    template = template.replace(el.fullMatch, this._data[el.stateKey])
+    template = template.replace(el.fullMatch, eval("this._data." + el.stateKey));
     node.nodeValue = template;
   });
 }
@@ -78,7 +78,7 @@ function initObserver(app, state) {
       const elementsToBind = extractMatchFromString(childnode.nodeValue);
       
       elementsToBind.forEach(el => addToStateElements(el, childnode))
-      // elementsToBind.forEach(el => updateNode(childnode, childnode.nodeValue))
+      elementsToBind.forEach(el => updateNode(childnode, childnode.nodeValue))
         
     });
   });
