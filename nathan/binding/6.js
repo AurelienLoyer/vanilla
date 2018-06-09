@@ -15,17 +15,16 @@ function bindData(element, data) {
 }
 
 
-function bindElement(element, state) {
-    forEachAttribute(element, bindAttribute, state);
-    bindTemplates(element);
-}
-
-
 function forEachChildren(app, doStuffOnChildren, ...args) {
     let flatChildren = app.querySelectorAll('*');
     flatChildren.forEach((child) => {
         doStuffOnChildren(child, ...args);
     });
+}
+
+function bindElement(element, state) {
+    forEachAttribute(element, bindAttribute, state);
+    bindTemplates(element);
 }
 
 const handler = {

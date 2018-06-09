@@ -3,24 +3,21 @@ const bindSugarPattern = ":";
 const attributeRegex = new RegExp(`\^${bindPattern}|${bindSugarPattern}`);
 let attributesObservers = {};
 
-
-function bindData(element, data) {
-    this._data = data;
-
-    forEachChildren(app, bindElement, data)
-
-    return new Proxy(data, handler);
+function bindData(element, state) {
+    this._data = state;
+    forEachChildren(app, bindElement);
+    return new Proxy(state, handler);
 }
 
-function bindElement(element, state) {
-    forEachAttribute(element, bindAttribute, state);
-}
-
-function forEachChildren(app, doStuffOnChildren, ...args) {
+function forEachChildren(app, doStuffOnChildren) {
     let flatChildren = app.querySelectorAll('*');
     flatChildren.forEach((child) => {
-        doStuffOnChildren(child, ...args);
+        doStuffOnChildren(child);
     });
+}
+
+function bindElement(element) {
+    forEachAttribute(element, bindAttribute)
 }
 
 const handler = {
@@ -33,39 +30,39 @@ const handler = {
     }
 };
 
-
 /**
  * Attributes
  */
-function forEachAttribute(element, doStuffOnAttribute, ...args) {
-    Object.values(element.attributes).forEach((fullAttribute) => {
-        if (attributeRegex.test(fullAttribute.localName) && fullAttribute.specified) {
-            doStuffOnAttribute(element, fullAttribute, ...args);
+function forEachAttribute(element, doStuffOnAttribute) {
+    Object.values(element.attributes).forEach((attribute) => {
+        if (attributeRegex.test(attribute.localName) && attribute.specified) {
+            doStuffOnAttribute(element, attribute)
         }
-    });
+    })
 }
 
-function extractAttribute(element, attributeName) {
-    element.removeAttribute(attributeName);
-    return attributeName.replace(bindPattern, '');
+function bindAttribute(element, attribute) {
+    let attributeName = extractAttribute(element, attribute.localName);
+
+    if (!Array.isArray(attributesObservers[attribute.value])) {
+        attributesObservers[attribute.value] = [];
+    }
+    attributesObservers[attribute.value].push({element, attribute: attributeName})
+
+    element.setAttribute(attributeName, this._data[attribute.value]);
+}
+
+function extractAttribute(element, localName) {
+    element.removeAttribute(localName)
+    return localName.replace(bindPattern, '');
 }
 
 function updateAttributes(attribute, value) {
     const observers = attributesObservers[attribute];
+
     if (observers) {
         observers.forEach((observer) => {
             observer.element.setAttribute(observer.attribute, value);
         })
     }
-}
-
-function bindAttribute(element, fullAttribute, state) {
-    let attribute = extractAttribute(element, fullAttribute.localName);
-
-        let observers = attributesObservers[fullAttribute.value]
-        observers = observers ? observers : []
-        observers.push({ element, attribute })
-        attributesObservers[fullAttribute.value] = observers;
-
-        element.setAttribute(attribute, state[fullAttribute.value]);
 }

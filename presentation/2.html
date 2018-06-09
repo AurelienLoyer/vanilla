@@ -20,9 +20,20 @@
       <img z-bind:height="height" z-bind:alt="lastname" z-bind:src="picture"/>
     </p>
   </div>
+  <section>
+    Bonjour {{ firstname }} {{ lastname }}
+    <br>Demo JS super
+    <strong>{{ job }}</strong> ?
+  </section>
+  <section>
+    <p>
+      Par : {{ height }} de {{height}} <br>
+      Et : {{ job}} de {{title}}
+    </p>
+  </section>
 </div>
 
-<script src="1.js"></script>
+<script src="2.js"></script>
 <script>
 
     let state = {

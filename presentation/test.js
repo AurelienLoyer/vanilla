@@ -40,10 +40,10 @@ function forEachAttribute(element, doStuffOnAttribute) {
 function bindAttribute(element, attribute) {
     let attributeName = extractAttribute(element, attribute.localName);
 
-    let observers = attributesObservers[attribute.value];
-    observers = observers ? observers : [];
-    observers.push({element, attribute: attributeName})
-    attributesObservers[attribute.value] = observers;
+    if (!Array.isArray(attributesObservers[attribute.value])) {
+        attributesObservers[attribute.value] = [];
+    }
+    attributesObservers[attribute.value].push({element, attribute: attributeName})
 
     element.setAttribute(attributeName, this._data[attribute.value]);
 }
