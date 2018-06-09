@@ -4,7 +4,7 @@ const attributeRegex = new RegExp(`\^${bindPattern}|${bindSugarPattern}`);
 let attributesObservers = {};
 
 function bindData(element, state) {
-    this._data = state;
+    this._state = state;
     forEachChildren(app, bindElement);
     return new Proxy(state, handler);
 }
@@ -22,10 +22,10 @@ function bindElement(element) {
 
 const handler = {
     get: (target, key) => {
-        return this._data[key];
+        return this._state[key];
     },
     set: (target, key, value) => {
-        this._data[key] = value;
+        this._state[key] = value;
         updateAttributes(key, value);
     }
 };
@@ -49,7 +49,7 @@ function bindAttribute(element, attribute) {
     }
     attributesObservers[attribute.value].push({element, attribute: attributeName})
 
-    element.setAttribute(attributeName, this._data[attribute.value]);
+    element.setAttribute(attributeName, this._state[attribute.value]);
 }
 
 function extractAttribute(element, localName) {
