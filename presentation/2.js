@@ -1,5 +1,5 @@
-const bindPattern = "z-bind:";
-const bindSugarPattern = ":";
+const bindPattern = 'z-bind:';
+const bindSugarPattern = ':';
 const attributeRegex = new RegExp(`\^${bindPattern}|${bindSugarPattern}`);
 const attributesByState = {};
 
@@ -65,7 +65,7 @@ function updateTemplates(key) {
 function updateTemplate(node, template) {
     const elementsToBind = extractMatchFromString(template);
     elementsToBind.forEach(el => {
-        template = template.replace(el.fullMatch, eval("this._state." + el.stateKey))
+        template = template.replace(el.fullMatch, eval('this._state.' + el.stateKey))
         node.nodeValue = template;
     });
 }
@@ -82,21 +82,21 @@ function addToTemplatesByState(match, childNode) {
 
 function extractMatchFromString(string) {
     let m;
-    let matchs = [];
+    let matches = [];
 
     do {
         m = templatingRegex.exec(string);
         if (m) {
-            matchs.push({
+            matches.push({
                 fullMatch: m[0],
                 stateKey: m[1]
             });
         }
     } while (m);
 
-    return matchs;
+    return matches;
 }
-
+  
 /**
  * Attributes
  */
@@ -108,15 +108,15 @@ function forEachAttribute(element, doStuffOnAttribute) {
     })
 }
 
-function bindAttribute(element, attribute) {
-    let attributeName = extractAttribute(element, attribute.localName);
+function bindAttribute(element, attributeEl) {
+    let attributeName = extractAttribute(element, attributeEl.localName);
 
-    if (!Array.isArray(attributesByState[attribute.value])) {
-        attributesByState[attribute.value] = [];
+    if (!Array.isArray(attributesByState[attributeEl.value])) {
+        attributesByState[attributeEl.value] = [];
     }
-    attributesByState[attribute.value].push({ element, attributeName })
+    attributesByState[attributeEl.value].push({ element, attributeName })
 
-    updateAttribute(element, attributeName, attribute.value);
+    updateAttribute(element, attributeName, attributeEl.value);
 }
 
 function extractAttribute(element, localName) {
