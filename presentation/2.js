@@ -1,9 +1,10 @@
 const bindPattern = "z-bind:";
 const bindSugarPattern = ":";
 const attributeRegex = new RegExp(`\^${bindPattern}|${bindSugarPattern}`);
-let attributesObservers = {};
-const templatingRegex = /{{2}(.*?)\}{2}/gi;
-const stateElements = {};
+const attributesObservers = {};
+
+const templatingRegex = /{{2}(.*?)\}{2}/gi;   // TODO : ADD
+const stateElements = {};                     // TODO : ADD
 
 function bindData(element, state) {
     this._data = state;
@@ -35,7 +36,7 @@ const handler = {
 };
 
 /**
- * template
+ * template // TODO : ADD
  */
 
 function forEachTextNode(element, doStuffOnTextNode) {
