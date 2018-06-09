@@ -41,15 +41,17 @@ const handler = {
 
 function forEachTextNode(element, doStuffOnTextNode) {
     element.childNodes.forEach(child => {
-        doStuffOnTextNode(child);
-    })
+        if (child.constructor.name === 'Text') {
+            doStuffOnTextNode(child);
+        }
+    });
 }
 function bindTemplates(child) {
     const extractedStrings = extractMatchFromString(child.nodeValue);
     extractedStrings.forEach(stringToInterpol => {
-        addToStateElements(stringToInterpol, child)
-        updateTemplate(child, child.nodeValue)
-    })
+        addToStateElements(stringToInterpol, child);
+        updateTemplate(child, child.nodeValue);
+    });
 }
 
 function updateTemplate(node, template) {
