@@ -50,8 +50,9 @@ function extractMatchFromString(string) {
 }
 
 function addToStateElements(match, childnode) {
-  if (!Array.isArray(stateElements[match.stateKey]))
+  if (!Array.isArray(stateElements[match.stateKey])) {
     stateElements[match.stateKey] = [];
+  }
 
   stateElements[match.stateKey].push({
     node: childnode,

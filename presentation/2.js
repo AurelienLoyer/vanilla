@@ -4,7 +4,7 @@ const attributeRegex = new RegExp(`\^${bindPattern}|${bindSugarPattern}`);
 const attributesByState = {};
 
 const templatingRegex = /{{2}(.*?)\}{2}/gi;   // TODO : ADD
-const stateElements = {};                     // TODO : ADD
+const templatesByState = {};                  // TODO : ADD
 
 function bindData(element, state) {
     this._state = state;
@@ -50,14 +50,14 @@ function forEachTextNode(element, doStuffOnTextNode) {
 function bindTemplates(child) {
     const extractedStrings = extractMatchFromString(child.nodeValue);
     extractedStrings.forEach(stringToInterpol => {
-        addToStateElements(stringToInterpol, child);
+        addToTemplatesByState(stringToInterpol, child);
     });
     updateTemplate(child, child.nodeValue);
 }
 
 
 function updateTemplates(key) {
-    stateElements[key].forEach(el => {
+    templatesByState[key].forEach(el => {
         updateTemplate(el.node, el.initialValue);
     });
 }
@@ -65,16 +65,16 @@ function updateTemplates(key) {
 function updateTemplate(node, template) {
     const elementsToBind = extractMatchFromString(template);
     elementsToBind.forEach(el => {
-        template = template.replace(el.fullMatch, this._state[el.stateKey])
+        template = template.replace(el.fullMatch, eval("this._state." + el.stateKey))
         node.nodeValue = template;
     });
 }
 
-function addToStateElements(match, childNode) {
-    if (!Array.isArray(stateElements[match.stateKey]))
-        stateElements[match.stateKey] = [];
+function addToTemplatesByState(match, childNode) {
+    if (!Array.isArray(templatesByState[match.stateKey]))
+        templatesByState[match.stateKey] = [];
 
-    stateElements[match.stateKey].push({
+    templatesByState[match.stateKey].push({
         node: childNode,
         initialValue: childNode.nodeValue,
     });
@@ -83,28 +83,16 @@ function addToStateElements(match, childNode) {
 function extractMatchFromString(string) {
     let m;
     let matchs = [];
-    while ((m = templatingRegex.exec(string)) !== null) {
 
-        if (m.index === templatingRegex.lastIndex) {
-            templatingRegex.lastIndex++;
+    do {
+        m = templatingRegex.exec(string);
+        if (m) {
+            matchs.push({
+                fullMatch: m[0],
+                stateKey: m[1]
+            });
         }
-
-        let fullMatch;
-        let stateKey;
-
-        m.forEach((match, groupIndex) => {
-            if (groupIndex === 0) {
-                fullMatch = match;
-            } else {
-                stateKey = match.trim();
-            }
-        });
-
-        matchs.push({
-            fullMatch,
-            stateKey
-        })
-    }
+    } while (m);
 
     return matchs;
 }
