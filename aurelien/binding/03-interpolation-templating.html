@@ -14,14 +14,24 @@
     <div id="app">
         <section>
             Bonjour le {{ conference }} {{ lieux }}
-            <br>Demo JS super 
+            <br>Demo JS super
             <strong>{{ truc }}</strong> ?
         </section>
         <section>
             <p>
-                Par : {{ speaker1 }} de {{lieux}} <br>
-                Et : {{ speaker2}} de {{lieux}}
+                Par : {{ speaker1 }} de {{lieux}}
+                <br> Et : {{ speaker2}} de {{lieux}}
             </p>
+        </section>
+        <section>
+            <ul>
+                <li>
+                    {{ complex.toto.tata }}
+                </li>
+                <li>
+                    {{ complex.test[1] }}
+                </li>
+            </ul>
         </section>
     </div>
 
@@ -35,6 +45,15 @@
             truc: "Cool",
             speaker1: "Aurélien",
             speaker2: "Nathan",
+            complex: {
+                test: [
+                    'user1',
+                    'user2'
+                ],
+                toto: {
+                    tata: 1,
+                }
+            }
         };
 
         state = bind(state, document.getElementById('app'));
