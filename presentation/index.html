@@ -1,0 +1,41 @@
+<html xmlns:z-bind="http://www.w3.org/1999/xhtml">
+<body>
+
+<h2>Generic Binding</h2>
+
+<strong id="undefined">Result</strong>
+
+<div class="app" id="app" z-bind:title="toto">
+  <div>
+    <p z-test="nope" z-bind:title="firstname">test title</p>
+    <input z-bind:value="firstname" z-bind:title="lastname"/>
+    <input z-bind:value="firstname" /><br/>
+
+    <input z-bind:value="firstname" />
+    <input z-bind:value="lastname"/><br/>
+
+    <input z-bind:value="lastname"/>
+    <input z-bind:value="firstname"/><br/>
+    <p>
+      <img z-bind:height="height" z-bind:alt="lastname" z-bind:src="picture"/>
+    </p>
+  </div>
+</div>
+
+<script src="test.js"></script>
+<script>
+
+    let state = {
+        title: "DevFest",
+        firstname: "Aurelien",
+        lastname: "Loyer",
+        job: "Bug Maker",
+        height: "185px",
+        picture: "https://i.ytimg.com/vi/wT7xL5oq1Jg/hqdefault.jpg"
+    }
+
+    state = bindData(document.getElementById('app'), state);
+
+</script>
+</body>
+</html>
