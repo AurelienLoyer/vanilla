@@ -1,33 +1,54 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
-
+<html xmlns:v-bind="http://www.w3.org/1999/xhtml">
 <head>
-
-  <meta charset="UTF-8">
-  <title>Title</title>
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 </head>
-
 <body>
-  <div id="app-2">
-    <span v-bind:title="toto.tata['titi.tutu']">
-      Hover your mouse over me for a few seconds to see my dynamically bound title!
-    </span>
+
+<h2>Generic Binding</h2>
+
+<strong id="undefined">Result</strong>
+
+<div class="app" id="app">
+  <div>
+    <p v-bind:title="firstname">test title</p>
+    <input v-bind:value="firstname" v-bind:title="lastname"/>
+    <input v-bind:value="firstname" /><br/>
+
+    <input v-bind:value="firstname" />
+    <input v-bind:value="lastname"/><br/>
+
+    <input v-bind:value="lastname"/>
+    <input v-bind:value="firstname"/><br/>
+    <p>
+      <img v-bind:height="height" v-bind:alt="lastname" v-bind:src="picture"/>
+    </p>
   </div>
+  <section>
+    Bonjour {{ firstname }} {{ lastname }}
+    <br>Demo JS super
+    <strong>{{ job }}</strong> ?
+  </section>
+  <section>
+    <p>
+      Par : {{ height }} de {{height}} <br>
+      Et : {{ job}} de {{title}}
+    </p>
+  </section>
+</div>
 
-  <script>
+<script src="2.js"></script>
+<script>
     new Vue({
-      el: '#app-2',
-      data: {
-        message: 'You loaded this page on ' + new Date().toLocaleString(),
-        toto: {
-          tata: {
-            'titi.tutu': 'bjr'
-          }
+        el: '#app',
+        data: {
+            title: "DevFest",
+            firstname: "Aurelien",
+            lastname: "Loyer",
+            job: "Bug Maker",
+            height: "185px",
+            picture: "https://i.ytimg.com/vi/wT7xL5oq1Jg/hqdefault.jpg"
         }
-      }
     })
-  </script>
+</script>
 </body>
-
 </html>

@@ -28,7 +28,7 @@
   <section>
     <p>
       Par : {{ height }} de {{height}} <br>
-      Et : {{ job}} de {{title}}
+      Et : {{ job }} de {{ complex.toto }}
     </p>
   </section>
 </div>
@@ -38,6 +38,7 @@
 
     let state = {
         title: "DevFest",
+        complex: { toto: "toto"},
         firstname: "Aurelien",
         lastname: "Loyer",
         job: "Bug Maker",
@@ -46,7 +47,6 @@
     }
 
     state = bindData(document.getElementById('app'), state);
-
 </script>
 </body>
 </html>

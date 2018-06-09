@@ -7,7 +7,7 @@ const templatingRegex = /{{2}(.*?)\}{2}/gi;   // TODO : ADD
 const stateElements = {};                     // TODO : ADD
 
 function bindData(element, state) {
-    this._data = state;
+    this._state = state;
     forEachChildren(app, bindElement);
     return new Proxy(state, handler);
 }
@@ -26,11 +26,11 @@ function bindElement(element) {
 
 const handler = {
     get: (target, key) => {
-        return this._data[key];
+        return this._state[key];
     },
     set: (target, key, value) => {
-        this._data[key] = value;
-        updateAttributes(key, value);
+        this._state[key] = value;
+        updateAttributes(key);
         updateTemplates(key);                  // TODO : ADD
     }
 };
@@ -41,7 +41,7 @@ const handler = {
 
 function forEachTextNode(element, doStuffOnTextNode) {
     element.childNodes.forEach(child => {
-        if (child.constructor.name === 'Text') {
+        if (child instanceof Text) {
             doStuffOnTextNode(child);
         }
     });
@@ -65,7 +65,7 @@ function updateTemplates(key) {
 function updateTemplate(node, template) {
     const elementsToBind = extractMatchFromString(template);
     elementsToBind.forEach(el => {
-        template = template.replace(el.fullMatch, this._data[el.stateKey])
+        template = template.replace(el.fullMatch, this._state[el.stateKey])
         node.nodeValue = template;
     });
 }
@@ -108,6 +108,7 @@ function extractMatchFromString(string) {
 
     return matchs;
 }
+
 /**
  * Attributes
  */
@@ -125,9 +126,9 @@ function bindAttribute(element, attribute) {
     if (!Array.isArray(attributesByState[attribute.value])) {
         attributesByState[attribute.value] = [];
     }
-    attributesByState[attribute.value].push({element, attribute: attributeName})
+    attributesByState[attribute.value].push({ element, attributeName })
 
-    element.setAttribute(attributeName, this._data[attribute.value]);
+    updateAttribute(element, attributeName, attribute.value);
 }
 
 function extractAttribute(element, localName) {
@@ -135,12 +136,16 @@ function extractAttribute(element, localName) {
     return localName.replace(bindPattern, '');
 }
 
-function updateAttributes(attribute, value) {
-    const observers = attributesByState[attribute];
+function updateAttributes(stateProperty) {
+    const attributes = attributesByState[stateProperty];
 
-    if (observers) {
-        observers.forEach((observer) => {
-            observer.element.setAttribute(observer.attribute, value);
+    if (attributes) {
+        attributes.forEach((attribute) => {
+            updateAttribute(attribute.element, attribute.attributeName, stateProperty);
         })
     }
+}
+
+function updateAttribute(element, attributeName, dataProperty) {
+    element.setAttribute(attributeName, this._state[dataProperty]);
 }
