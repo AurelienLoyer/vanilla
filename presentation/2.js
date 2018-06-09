@@ -86,7 +86,7 @@ function extractMatchFromString(string) {
     let matchs = [];
 
     do {
-        m = regex.exec(string);
+        m = templatingRegex.exec(string);
         if (m) {
             matchs.push({
                 fullMatch: m[0],
