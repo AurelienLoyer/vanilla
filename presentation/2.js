@@ -31,7 +31,7 @@ const handler = {
     set: (target, key, value) => {
         this._data[key] = value;
         updateAttributes(key, value);
-        updateTemlate(key);                  // TODO : ADD
+        updateTemplates(key);                  // TODO : ADD
     }
 };
 
@@ -46,11 +46,19 @@ function forEachTextNode(element, doStuffOnTextNode) {
         }
     });
 }
+
 function bindTemplates(child) {
     const extractedStrings = extractMatchFromString(child.nodeValue);
     extractedStrings.forEach(stringToInterpol => {
         addToStateElements(stringToInterpol, child);
         updateTemplate(child, child.nodeValue);
+    });
+}
+
+
+function updateTemplates(key) {
+    stateElements[key].forEach(el => {
+        updateTemplate(el.node, el.initialValue);
     });
 }
 
@@ -61,6 +69,7 @@ function updateTemplate(node, template) {
         node.nodeValue = template;
     });
 }
+
 function addToStateElements(match, childNode) {
     if (!Array.isArray(stateElements[match.stateKey]))
         stateElements[match.stateKey] = [];
@@ -69,14 +78,8 @@ function addToStateElements(match, childNode) {
         node: childNode,
         initialValue: childNode.nodeValue,
     });
-
 }
 
-function updateTemlate(key) {
-    stateElements[key].forEach(el => {
-        updateTemplate(el.node, el.initialValue);
-    });
-}
 
 function extractMatchFromString(string) {
     let m;
