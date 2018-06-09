@@ -1,7 +1,7 @@
 const bindPattern = "z-bind:";
 const bindSugarPattern = ":";
 const attributeRegex = new RegExp(`\^${bindPattern}|${bindSugarPattern}`);
-const attributesObservers = {};
+const attributesByState = {};
 
 const templatingRegex = /{{2}(.*?)\}{2}/gi;   // TODO : ADD
 const stateElements = {};                     // TODO : ADD
@@ -51,8 +51,8 @@ function bindTemplates(child) {
     const extractedStrings = extractMatchFromString(child.nodeValue);
     extractedStrings.forEach(stringToInterpol => {
         addToStateElements(stringToInterpol, child);
-        updateTemplate(child, child.nodeValue);
     });
+    updateTemplate(child, child.nodeValue);
 }
 
 
@@ -79,7 +79,6 @@ function addToStateElements(match, childNode) {
         initialValue: childNode.nodeValue,
     });
 }
-
 
 function extractMatchFromString(string) {
     let m;
@@ -123,10 +122,10 @@ function forEachAttribute(element, doStuffOnAttribute) {
 function bindAttribute(element, attribute) {
     let attributeName = extractAttribute(element, attribute.localName);
 
-    if (!Array.isArray(attributesObservers[attribute.value])) {
-        attributesObservers[attribute.value] = [];
+    if (!Array.isArray(attributesByState[attribute.value])) {
+        attributesByState[attribute.value] = [];
     }
-    attributesObservers[attribute.value].push({element, attribute: attributeName})
+    attributesByState[attribute.value].push({element, attribute: attributeName})
 
     element.setAttribute(attributeName, this._data[attribute.value]);
 }
@@ -137,7 +136,7 @@ function extractAttribute(element, localName) {
 }
 
 function updateAttributes(attribute, value) {
-    const observers = attributesObservers[attribute];
+    const observers = attributesByState[attribute];
 
     if (observers) {
         observers.forEach((observer) => {
