@@ -3,10 +3,10 @@ const bindSugarPattern = ':';
 const attributeRegex = new RegExp(`\^${bindPattern}|${bindSugarPattern}`);
 const attributesByState = {};
 
-const templatingRegex = /{{2}(.*?)\}{2}/gi;   // TODO : ADD
-const templatesByState = {};                  // TODO : ADD
+const bracketRegex = /{{2}(.*?)\}{2}/gi;        // TODO : ADD
+const templatesByState = {};                    // TODO : ADD
 
-function bindData(element, state) {
+function bindState(element, state) {
     this._state = state;
     forEachChildren(app, bindElement);
     return new Proxy(state, handler);
@@ -48,7 +48,7 @@ function forEachTextNode(element, doStuffOnTextNode) {
 }
 
 function bindTemplates(child) {
-    const extractedStrings = extractMatchFromString(child.nodeValue);
+    const extractedStrings = extractTemplatesFromString(child.nodeValue);
     extractedStrings.forEach(stringToInterpol => {
         addToTemplatesByState(stringToInterpol, child);
     });
@@ -63,7 +63,7 @@ function updateTemplates(key) {
 }
 
 function updateTemplate(node, template) {
-    const elementsToBind = extractMatchFromString(template);
+    const elementsToBind = extractTemplatesFromString(template);
     elementsToBind.forEach(el => {
         template = template.replace(el.fullMatch, eval('this._state.' + el.stateKey))
         node.nodeValue = template;
@@ -71,8 +71,9 @@ function updateTemplate(node, template) {
 }
 
 function addToTemplatesByState(match, childNode) {
-    if (!Array.isArray(templatesByState[match.stateKey]))
+    if (!Array.isArray(templatesByState[match.stateKey])) {
         templatesByState[match.stateKey] = [];
+    }
 
     templatesByState[match.stateKey].push({
         node: childNode,
@@ -80,21 +81,22 @@ function addToTemplatesByState(match, childNode) {
     });
 }
 
-function extractMatchFromString(string) {
-    let m;
-    let matches = [];
+
+function extractTemplatesFromString(string) {
+    let template;
+    let templates = [];
 
     do {
-        m = templatingRegex.exec(string);
-        if (m) {
-            matches.push({
-                fullMatch: m[0],
-                stateKey: m[1]
+        template = bracketRegex.exec(string);
+        if (template) {
+            templates.push({
+                fullMatch: template[0],
+                stateKey: template[1].trim()
             });
         }
-    } while (m);
+    } while (template);
 
-    return matches;
+    return templates;
 }
   
 /**

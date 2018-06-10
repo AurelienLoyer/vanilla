@@ -1,74 +1,89 @@
-const regex = /{{2}(.*?)\}{2}/gis;
-const attributesObservers = {};
-const stateElements = {};
+const bracketRegex = /{{2}(.*?)\}{2}/gi;
+const templatesByState = {};
+
+function bindState(element, state) {
+    this._state = state;
+    forEachChildren(app, bindElement);
+    return new Proxy(state, handler);
+}
+
+function forEachChildren(app, doStuffOnChildren) {
+    let flatChildren = app.querySelectorAll('*');
+    flatChildren.forEach((child) => {
+        doStuffOnChildren(child);
+    });
+}
+
+function bindElement(element) {
+    forEachTextNode(element, bindTemplates);
+}
 
 const handler = {
-  apply: (target, that, args) => {},
-  get: (target, attribute, proxy) => {
-    return this._data[attribute];
-  },
-  set: (target, key, value, proxy) => {
-    this._data[key] = value;
-    stateElements[key].forEach(el => {
-      updateNode(el.node, el.initialValue);
-    });
-  }
+    get: (target, key) => {
+        return this._state[key];
+    },
+    set: (target, key, value) => {
+        this._state[key] = value;
+        updateTemplates(key);
+    }
 };
 
-function bind(data, app) {
-  this._data = data;
-  initObserver(app, data);
-  return new Proxy(data, handler);
-}
-
-function updateNode(node, template) {
-  const elementsToBind = extractMatchFromString(template);
-  elementsToBind.forEach(el => {
-    template = template.replace(
-      el.fullMatch,
-      eval("this._data." + el.stateKey)
-    );
-    node.nodeValue = template;
-  });
-}
-
-function extractMatchFromString(string) {
-  let m;
-  let matchs = [];
-
-  do {
-    m = regex.exec(string);
-    if (m) {
-      matchs.push({
-        fullMatch: m[0],
-        stateKey: m[1]
-      });
-    }
-  } while (m);
-
-  return matchs;
-}
-
-function addToStateElements(match, childnode) {
-  if (!Array.isArray(stateElements[match.stateKey])) {
-    stateElements[match.stateKey] = [];
-  }
-
-  stateElements[match.stateKey].push({
-    node: childnode,
-    initialValue: childnode.nodeValue
-  });
-}
-
-function initObserver(app, state) {
-  const flatChildren = app.querySelectorAll("*");
-
-  flatChildren.forEach(element => {
-    element.childNodes.forEach(childnode => {
-      const elementsToBind = extractMatchFromString(childnode.nodeValue);
-
-      elementsToBind.forEach(el => addToStateElements(el, childnode));
-      elementsToBind.forEach(el => updateNode(childnode, childnode.nodeValue));
+function forEachTextNode(element, doStuffOnTextNode) {
+    element.childNodes.forEach(child => {
+        if (child instanceof Text) {
+            doStuffOnTextNode(child);
+        }
     });
-  });
+}
+
+function bindTemplates(child) {
+    const extractedStrings = extractTemplatesFromString(child.nodeValue);
+    extractedStrings.forEach(stringToInterpol => {
+        addToTemplatesByState(stringToInterpol, child);
+    });
+    updateTemplate(child, child.nodeValue);
+}
+
+
+function updateTemplates(key) {
+    templatesByState[key].forEach(el => {
+        updateTemplate(el.node, el.initialValue);
+    });
+}
+
+function updateTemplate(node, template) {
+    const elementsToBind = extractTemplatesFromString(template);
+    elementsToBind.forEach(el => {
+        template = template.replace(el.fullMatch, eval('this._state.' + el.stateKey))
+        node.nodeValue = template;
+    });
+}
+
+function addToTemplatesByState(match, childNode) {
+    if (!Array.isArray(templatesByState[match.stateKey])) {
+        templatesByState[match.stateKey] = [];
+    }
+
+    templatesByState[match.stateKey].push({
+        node: childNode,
+        initialValue: childNode.nodeValue,
+    });
+}
+
+
+function extractTemplatesFromString(string) {
+    let template;
+    let templates = [];
+
+    do {
+        template = bracketRegex.exec(string);
+        if (template) {
+            templates.push({
+                fullMatch: template[0],
+                stateKey: template[1].trim()
+            });
+        }
+    } while (template);
+
+    return templates;
 }

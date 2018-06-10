@@ -3,7 +3,7 @@ const bindSugarPattern = ":";
 const attributeRegex = new RegExp(`\^${bindPattern}|${bindSugarPattern}`);
 let attributesObservers = {};
 
-function bindData(element, state) {
+function bindState(element, state) {
     this._state = state;
     forEachChildren(app, bindElement);
     return new Proxy(state, handler);
