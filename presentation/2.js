@@ -3,10 +3,10 @@ const bindSugarPattern = ':';
 const attributeRegex = new RegExp(`\^${bindPattern}|${bindSugarPattern}`);
 const attributesByState = {};
 
-const bracketRegex = /{{2}(.*?)\}{2}/gi;   // TODO : ADD
-const templatesByState = {};                  // TODO : ADD
+const bracketRegex = /{{2}(.*?)\}{2}/gi;        // TODO : ADD
+const templatesByState = {};                    // TODO : ADD
 
-function bindData(element, state) {
+function bindState(element, state) {
     this._state = state;
     forEachChildren(app, bindElement);
     return new Proxy(state, handler);
