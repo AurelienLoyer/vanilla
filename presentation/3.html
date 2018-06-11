@@ -1,72 +1,58 @@
 <html xmlns:z-bind="http://www.w3.org/1999/xhtml">
+
 <head>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css" />
 </head>
+
 <body>
 
-<h2>Binding</h2>
+    <h2>My Profile</h2>
 
-<div id="app">
-  <div>
-    <p>
-      <img height="height" alt="lastname" src="https://tinyurl.com/ycu98mke"/>
-    </p>
-    <p title="firstname">test title</p>
-    <input value="John" title="lastname"/>
-    <input value="Doe"/><br/>
+    <div id="app">
+        <p>
+            <img z-bind:height="height" z-bind:alt="lastname" z-bind:src="avatar" />
+        </p>
+        <p z-bind:title="firstname">test title</p>
+        <input z-bind:value="firstname" z-bind:title="lastname" />
+        <input z-bind:value="lastname" />
+        <br/>
 
-    <input value="32"/>
-    <input value="US"/><br/>
+        <input z-bind:value="age" />
+        <input z-bind:value="country" />
+        <br/>
 
-    <input value="Texas"/>
-    <input value="Paris"/><br/>
+        <input z-bind:value="city" />
+        <input z-bind:value="street" />
+        <br/>
+    </div>
 
-  </div>
+    <script src="2.js"></script>
 
+    <script>
 
-  <div>
-    <p>
-      <img z-bind:height="height" z-bind:alt="lastname" z-bind:src="avatar"/>
-    </p>
-    <p z-bind:title="firstname">test title</p>
-    <input z-bind:value="firstname" z-bind:title="lastname"/>
-    <input z-bind:value="lastname"/><br/>
+        let state = {
+            title: "DevFest",
+            firstname: "Emmanuel",
+            lastname: "Demey",
+            age: 39,
+            country: "France",
+            city: "Lille",
+            street: "262 rue Brendan Eich",
+            avatar: "https://pbs.twimg.com/profile_images/799175687097688064/Y2TWhwYL_400x400.jpg"
+        };
 
-    <input z-bind:value="age"/>
-    <input z-bind:value="country"/><br/>
+        bind(document.getElementById('app'), state);
 
-    <input z-bind:value="city"/>
-    <input z-bind:value="street"/><br/>
-  </div>
-
-
-</div>
-</div>
-<script src="2.js"></script>
-<script>
-
-    let state = {
-        title: "DevFest",
-        firstname: "Emmanuel",
-        lastname: "Demey",
-        age: 39,
-        country: "France",
-        city: "Lille",
-        street: "262 rue Brendan Eich",
-        avatar: "https://pbs.twimg.com/profile_images/799175687097688064/Y2TWhwYL_400x400.jpg"
-    };
-    bind(document.getElementById('app'), state);
-
-
-    const state2 = new Proxy(state, {
-        get: (target, key) => {
-            return state[key];
-        },
-        set: (target, key, value) => {
-            state[key] = value;
-            bind(document.getElementById('app'), state);
-        }
-    })
-</script>
+        const state2 = new Proxy(state, {
+            get: (target, key) => {
+                return state[key];
+            },
+            set: (target, key, value) => {
+                state[key] = value;
+                bind(document.getElementById('app'), state);
+            }
+        })
+    </script>
 </body>
+
 </html>

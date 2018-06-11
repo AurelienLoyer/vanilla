@@ -28,7 +28,7 @@
 
     </div>
 
-    <script src="2.js"></script>
+    <script src="1.js"></script>
     <script>
 
         let state = {
@@ -40,8 +40,9 @@
             city: "Lille",
             street: "262 rue Brendan Eich",
             avatar: "https://pbs.twimg.com/profile_images/799175687097688064/Y2TWhwYL_400x400.jpg"
-        };
-        bind(document.getElementById('app'), state);
+        }
+
+        state = bind(document.getElementById('app'), state);
 
     </script>
 </body>
