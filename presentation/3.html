@@ -56,6 +56,17 @@
         avatar: "https://pbs.twimg.com/profile_images/799175687097688064/Y2TWhwYL_400x400.jpg"
     };
     bind(document.getElementById('app'), state);
+
+
+    const state2 = new Proxy(state, {
+        get: (target, key) => {
+            return state[key];
+        },
+        set: (target, key, value) => {
+            state[key] = value;
+            bind(document.getElementById('app'), state);
+        }
+    })
 </script>
 </body>
 </html>
