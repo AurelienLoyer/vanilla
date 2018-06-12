@@ -50,4 +50,3 @@ function extractBrackets(text) {
 
     return templates;
 }
-
