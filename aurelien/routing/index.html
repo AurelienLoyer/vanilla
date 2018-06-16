@@ -1,35 +1,61 @@
-<!DOCTYPE html>
-<html>
+<html xmlns:z-bind="http://www.w3.org/1999/xhtml">
 
 <head>
-    <meta charset="utf-8" />
-    <title>Test routing</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css" />
+    <link rel="stylesheet" href="../../presentation/app.css" />
 </head>
 
 <body>
 
-    <menu>
-        <ul>
-            <li>
-                <a href='#home'>Home</a>
-            </li>
-            <li>
-                <a href='#about'>About</a>
-            </li>
-            <li>
-                <a href='#devfest'>Devfest</a>
-            </li>
-            <li>
-                <a href='#contact'>Contact</a>
-            </li>
-        </ul>
-    </menu>
+    <div id="app">
 
-    <router-view></router-view>
+        <nav class="navbar is-light" role="navigation" aria-label="main navigation">
+            <div class="navbar-menu">
+                <a href="#edit" class="navbar-item">
+                    Edit
+                </a>
+                <a href="#preview" class="navbar-item">
+                    Preview
+                </a>
+            </div>
+        </nav>
 
-    <script src='js/page.js'></script>
-    <script src='js/router.js'></script>
-    <script src='js/main.js'></script>
+        <div id="inner-page"></div>
+
+    </div>
+
+    <script src="app.js"></script>
+    <script src="router.js"></script>
+
+    <script>
+
+        let state = {
+            title: "DevFest",
+            firstname: "Emmanuel",
+            firstname_comment: "Your name is great !",
+            lastname: "Demey",
+            twitter: "@Manu",
+            description: "Organizer of #DevFestLille - @GDGLille - Lille",
+            age: 39,
+            age_comment: "You're young !",
+            country: "France",
+            city: "Lille",
+            street: "262 rue Brendan Eich",
+            avatar: "https://pbs.twimg.com/profile_images/799175687097688064/Y2TWhwYL_400x400.jpg"
+        };
+
+        bind(document.getElementById('app'), state);
+
+        const state2 = new Proxy(state, {
+            get: (target, key) => {
+                return state[key];
+            },
+            set: (target, key, value) => {
+                state[key] = value;
+                bind(document.getElementById('app'), state);
+            }
+        })
+    </script>
 </body>
 
 </html>
