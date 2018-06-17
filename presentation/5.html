@@ -1,0 +1,106 @@
+<html xmlns:z-bind="http://www.w3.org/1999/xhtml">
+
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css" />
+    <link rel="stylesheet" href="app.css" />
+</head>
+
+<body>
+
+    <h2>My Profile</h2>
+
+    <div id="app">
+        <figure class="image is-96x96">
+            <img alt="dontforgetme" z-bind:src="avatar" />
+        </figure>
+
+        <br>
+
+        <div class="field">
+            <label class="label">FirstName</label>
+            <input class="input" type="text" placeholder="Text input" z-bind:value="firstname">
+            <p class="help is-danger">{{firstname_comment}}</p>
+        </div>
+
+        <div class="field">
+            <label class="label">Lastname</label>
+            <input class="input is-success" type="text" placeholder="Text input" z-bind:value="lastname">
+        </div>
+
+        <div class="field">
+            <label class="label">Age</label>
+            <input class="input is-danger" type="number" placeholder="Age input" z-bind:value="age">
+            <p class="help is-success">{{age_comment}}</p>
+        </div>
+
+        <div class="field">
+            <label class="label">Description</label>
+            <div class="control">
+                <textarea class="textarea" placeholder="Textarea">{{description}}</textarea>
+            </div>
+        </div>
+
+        <h2>Preview</h2>
+
+        <div class="card">
+
+            <div class="card-content">
+                <div class="media">
+                    <div class="media-left">
+                        <figure class="image is-48x48">
+                            <img z-bind:src="avatar" alt="Placeholder image">
+                        </figure>
+                    </div>
+                    <div class="media-content">
+                        <p class="title is-4">{{firstname}} {{lastname}}</p>
+                        <p class="subtitle is-6">{{twitter}}</p>
+                    </div>
+                </div>
+
+                <div class="content">
+                    {{firstname}} {{lastname}} |
+                    <strong>{{age}}</strong>
+                    <br> {{country}} / {{city}}
+                    <br>
+                    <i>{{street}}</i>
+                </div>
+            </div>
+        </div>
+
+        <br>
+
+        <div class="field is-grouped">
+            <div class="control">
+                <button class="button is-link">Save</button>
+            </div>
+            <div class="control">
+                <button class="button is-text">Cancel</button>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+
+        new Vue({
+            el: '#app',
+            data: {
+                title: "DevFest",
+                firstname: "Emmanuel",
+                firstname_comment: "Your name is great !",
+                lastname: "Demey",
+                twitter: "@Manu",
+                description: "Organizer of #DevFestLille - @GDGLille - Lille",
+                age: 39,
+                age_comment: "You're young !",
+                country: "France",
+                city: "Lille",
+                street: "262 rue Brendan Eich",
+                avatar: "https://pbs.twimg.com/profile_images/799175687097688064/Y2TWhwYL_400x400.jpg"
+            },
+        });
+
+    </script>
+</body>
+
+</html>

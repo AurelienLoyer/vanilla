@@ -1,0 +1,61 @@
+<html xmlns:z-bind="http://www.w3.org/1999/xhtml">
+
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css" />
+    <link rel="stylesheet" href="app.css" />
+</head>
+
+<body>
+
+    <div id="app">
+
+        <nav class="navbar is-light" role="navigation" aria-label="main navigation">
+            <div class="navbar-menu">
+                <a href="#edit" class="navbar-item">
+                    Edit
+                </a>
+                <a href="#preview" class="navbar-item">
+                    Preview
+                </a>
+            </div>
+        </nav>
+
+        <div id="inner-page"></div>
+
+    </div>
+
+    <script src="2.js"></script>
+    <script src="router.js"></script>
+
+    <script>
+
+        let state = {
+            title: "DevFest",
+            firstname: "Emmanuel",
+            firstname_comment: "Your name is great !",
+            lastname: "Demey",
+            twitter: "@Manu",
+            description: "Organizer of #DevFestLille - @GDGLille - Lille",
+            age: 39,
+            age_comment: "You're young !",
+            country: "France",
+            city: "Lille",
+            street: "262 rue Brendan Eich",
+            avatar: "https://pbs.twimg.com/profile_images/799175687097688064/Y2TWhwYL_400x400.jpg"
+        };
+
+        bind(document.getElementById('app'), state);
+
+        const state2 = new Proxy(state, {
+            get: (target, key) => {
+                return state[key];
+            },
+            set: (target, key, value) => {
+                state[key] = value;
+                bind(document.getElementById('app'), state);
+            }
+        })
+    </script>
+</body>
+
+</html>
