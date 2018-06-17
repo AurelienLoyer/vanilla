@@ -1,0 +1,19 @@
+{
+  "name": "vanilla",
+  "version": "1.0.0",
+  "description": "**Tout le monde sait comment utiliser Angular / React / VueJs ... mais savez-vous comment utiliser JavaScript ?**",
+  "main": " ",
+  "scripts": {
+    "start": "http-server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/T3kstiil3/vanilla.git"
+  },
+  "author": "Aurélien Loyer",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/T3kstiil3/vanilla/issues"
+  },
+  "homepage": "https://github.com/T3kstiil3/vanilla#readme"
+}

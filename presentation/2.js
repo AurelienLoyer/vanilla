@@ -6,14 +6,13 @@ function bind(app, state) {
     const attributeRegex = new RegExp(`\^${bindPattern}|${bindSugarPattern}`);
     const flatChildren = app.querySelectorAll('*');
     flatChildren.forEach((element) => {
+
         Object.values(element.attributes).forEach((attribute) => {
             if (attributeRegex.test(attribute.localName) && attribute.specified) {
                 const attributeName = attribute.localName.replace(attributeRegex, '')
                 element.setAttribute(attributeName, state[attribute.value]);
             }
         })
-
-
 
         element.childNodes.forEach(child => {
             if (child instanceof Text) {
