@@ -1,0 +1,84 @@
+<html xmlns:z-bind="http://www.w3.org/1999/xhtml">
+
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css" />
+    <link rel="stylesheet" href="app.css" />
+</head>
+
+<body>
+
+    <h1>My profile</h1>
+
+    <div id="app">
+
+        <figure class="image is-96x96">
+            <img alt="dontforgetme" src="https://tinyurl.com/ycu98mke" />
+        </figure>
+
+        <br>
+
+        <div class="field">
+            <label class="label">FirstName</label>
+            <input class="input" type="text" placeholder="Text input" value="John">
+            <p class="help is-danger">Your name is great !</p>
+        </div>
+
+        <div class="field">
+            <label class="label">Lastname</label>
+            <input class="input is-success" type="text" placeholder="Text input" value="Doe">
+        </div>
+
+        <div class="field">
+            <label class="label">Age</label>
+            <input class="input is-danger" type="number" placeholder="Age input" value="15">
+            <p class="help is-success">You're young !</p>
+        </div>
+
+        <div class="field">
+            <label class="label">Description</label>
+            <div class="control">
+                <textarea class="textarea" placeholder="Textarea">Interpolation here</textarea>
+            </div>
+        </div>
+
+        <h2>Preview</h2>
+
+        <div class="card">
+
+            <div class="card-content">
+                <div class="media">
+                    <div class="media-left">
+                        <figure class="image is-48x48">
+                            <img src="https://tinyurl.com/ycu98mke" alt="Placeholder image">
+                        </figure>
+                    </div>
+                    <div class="media-content">
+                        <p class="title is-4">John Doe</p>
+                        <p class="subtitle is-6">@johndooooe</p>
+                    </div>
+                </div>
+
+                <div class="content">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    <strong>Phasellus nec iaculis mauris.</strong>
+                    <br>
+                    <time>11:09 PM - 1 Jan 2016</time>
+                </div>
+            </div>
+        </div>
+
+        <br>
+
+        <div class="field is-grouped">
+            <div class="control">
+                <button class="button is-link">Save</button>
+            </div>
+            <div class="control">
+                <button class="button is-text">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
