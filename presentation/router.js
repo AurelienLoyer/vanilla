@@ -3,6 +3,8 @@ window.onhashchange = () => {
     loadPage(pageName);
 };
 
+loadPage(window.location.hash.substr(1) || 'edit');
+
 function loadPage(pageName) {
     fetch(`views/${pageName}.html`, {cache: "no-cache"})
         .then(res => res.text())
