@@ -1,4 +1,4 @@
-<html xmlns:z-bind="http://www.w3.org/1999/xhtml">
+<html xmlns:v-bind="http://www.w3.org/1999/xhtml">
 
 <head>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css" />
@@ -11,25 +11,25 @@
 
     <div id="app">
         <figure class="image is-96x96">
-            <img alt="dontforgetme" z-bind:src="avatar" />
+            <img alt="dontforgetme" v-bind:src="avatar" />
         </figure>
 
         <br>
 
         <div class="field">
             <label class="label">FirstName</label>
-            <input class="input" type="text" placeholder="Text input" z-bind:value="firstname">
+            <input class="input" type="text" placeholder="Text input" v-bind:value="firstname">
             <p class="help is-danger">{{firstname_comment}}</p>
         </div>
 
         <div class="field">
             <label class="label">Lastname</label>
-            <input class="input is-success" type="text" placeholder="Text input" z-bind:value="lastname">
+            <input class="input is-success" type="text" placeholder="Text input" v-bind:value="lastname">
         </div>
 
         <div class="field">
             <label class="label">Age</label>
-            <input class="input is-danger" type="number" placeholder="Age input" z-bind:value="age">
+            <input class="input is-danger" type="number" placeholder="Age input" v-bind:value="age">
             <p class="help is-success">{{age_comment}}</p>
         </div>
 
@@ -48,7 +48,7 @@
                 <div class="media">
                     <div class="media-left">
                         <figure class="image is-48x48">
-                            <img z-bind:src="avatar" alt="Placeholder image">
+                            <img v-bind:src="avatar" alt="Placeholder image">
                         </figure>
                     </div>
                     <div class="media-content">
@@ -79,25 +79,18 @@
         </div>
 
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 
     <script>
+        const req = new XMLHttpRequest();
+        req.open('GET', './user.json', false);
+        req.send(null);
+        let state = JSON.parse(req.responseText);
+
 
         new Vue({
             el: '#app',
-            data: {
-                title: "DevFest",
-                firstname: "Emmanuel",
-                firstname_comment: "Your name is great !",
-                lastname: "Demey",
-                twitter: "@Manu",
-                description: "Organizer of #DevFestLille - @GDGLille - Lille",
-                age: 39,
-                age_comment: "You're young !",
-                country: "France",
-                city: "Lille",
-                street: "262 rue Brendan Eich",
-                avatar: "https://pbs.twimg.com/profile_images/799175687097688064/Y2TWhwYL_400x400.jpg"
-            },
+            data: state,
         });
 
     </script>

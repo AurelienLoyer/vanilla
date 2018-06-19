@@ -6,6 +6,7 @@ function bind(app, state) {
     flatChildren.forEach((element) => {
         
         Object.values(element.attributes).forEach((attribute) => {
+            console.log(attribute.localName, ':', attribute.specified)
             if (attributeRegex.test(attribute.localName) && attribute.specified) {
                 const attributeName = attribute.localName.replace(attributeRegex, '')
                 element.setAttribute(attributeName, state[attribute.value]);
