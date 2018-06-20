@@ -1,4 +1,4 @@
-function init(app, state) {
+function apply(app, state) {
     const bindPattern = 'z-bind:';
     const bindSugarPattern = ':';
     const attributeRegex = new RegExp(`\^${bindPattern}|${bindSugarPattern}`);

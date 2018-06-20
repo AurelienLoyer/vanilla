@@ -86,9 +86,9 @@
         const req = new XMLHttpRequest();
         req.open('GET', 'http://aurelien-loyer.fr/vanilla/presentation/user.json', false);
         req.send(null);
-        let state = JSON.parse(req.responseText);
+        const state = JSON.parse(req.responseText);
 
-        init(document.getElementById('app'), state);
+        apply(document.getElementById('app'), state);
 
     </script>
 </body>
