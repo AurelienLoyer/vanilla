@@ -10,6 +10,6 @@ function loadPage(pageName) {
         .then(res => res.text())
         .then(res => {
             document.getElementById('inner-page').innerHTML = res;
-            bind(document.getElementById('app'), state);
+            init(document.getElementById('app'), state);
         })
 }

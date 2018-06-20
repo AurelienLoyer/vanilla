@@ -85,11 +85,11 @@
     <script>
 
         const req = new XMLHttpRequest();
-        req.open('GET', './user.json', false);
+        req.open('GET', 'http://aurelien-loyer.fr/vanilla/presentation/user.json', false);
         req.send(null);
         let state = JSON.parse(req.responseText);
 
-        bind(document.getElementById('app'), state);
+        init(document.getElementById('app'), state);
 
         const state2 = new Proxy(state, {
             get: (target, key) => {
@@ -97,7 +97,7 @@
             },
             set: (target, key, value) => {
                 state[key] = value;
-                bind(document.getElementById('app'), state);
+                init(document.getElementById('app'), state);
             }
         })
     </script>
