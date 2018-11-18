@@ -12,14 +12,14 @@
   <div id="app">
 
     <figure class="image is-96x96">
-      <img alt="dontforgetme" z-bind:alt bite z-bind:src="avatar" />
+      <img alt="dontforgetme" z-bind:alt z-bind:src="avatar" />
     </figure>
 
     <br>
 
     <div class="field">
       <label class="label">FirstName</label>
-      <input class="input" type="text" placeholder="Text input" z-bind:value="firstname">
+      <input class="input" type="text" placeholder="Text input" z-bind:value="firstname" >
       <p class="help is-danger">{{firstname_comment}}</p>
     </div>
 
