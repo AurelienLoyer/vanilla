@@ -1,0 +1,15 @@
+{
+    "Proxy Skeleton" : {
+        "prefix" : "Proxy",
+        "body" : [
+            "new Proxy(state, {",
+            "            get: (target, key) => {",
+            "                return state[key];",
+            "            },",
+            "            set: (target, key, value) => {",
+            "                state[key] = value;",
+            "            }",
+            "        })"
+        ]
+    }
+}

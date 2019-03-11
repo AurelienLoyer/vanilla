@@ -1,0 +1,26 @@
+{
+    "Display Name" : {
+        "prefix" : "extractBrackets",
+        "body" : [
+            "function extractBrackets(text) {",
+            "    const bracketRegex = /{{2}(.*?)\\}{2}/gi;",
+            "",
+            "    let template;",
+            "    const templates = [];",
+            "",
+            "    do {",
+            "        template = bracketRegex.exec(text);",
+            "        if (template) {",
+            "            templates.push({",
+            "                fullMatch: template[0],",
+            "                stateKey: template[1].trim()",
+            "            });",
+            "        }",
+            "    } while (template);",
+            "",
+            "    return templates;",
+            "}"
+        ]
+    }
+	
+}
