@@ -3,13 +3,13 @@ window.onhashchange = () => {
     loadPage(pageName);
 };
 
-loadPage(window.location.hash.substr(1) || 'edit');
+loadPage(window.location.hash.substr(1) || 'edit');
 
 function loadPage(pageName) {
     fetch(`views/${pageName}.html`, {cache: "no-cache"})
         .then(res => res.text())
         .then(res => {
             document.getElementById('inner-page').innerHTML = res;
-            init(document.getElementById('app'), state);
+            apply(document.getElementById('app'), state);
         })
 }

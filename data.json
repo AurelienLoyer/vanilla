@@ -1,0 +1,13 @@
+{
+    "firstname": "Obi-Wan",
+    "firstname_comment": "Your name is great !",
+    "lastname": "Kenobi",
+    "twitter": "@AurelienLoyer",
+    "description": "Interpolation here",
+    "age": 39,
+    "age_comment": "You're young !",
+    "country": "Canada",
+    "city": "Montreal",
+    "street": "900 Rue de la Gauchetière",
+    "avatar": "https://cdn.iconscout.com/icon/free/png-256/avatar-375-456327.png"
+}
