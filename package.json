@@ -4,7 +4,7 @@
   "description": "**Tout le monde sait comment utiliser Angular / React / VueJs ... mais savez-vous comment utiliser JavaScript ?**",
   "main": " ",
   "scripts": {
-    "start": "http-server"
+    "start": "http-server ."
   },
   "repository": {
     "type": "git",

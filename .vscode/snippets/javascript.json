@@ -1,9 +1,26 @@
-{
-    "Display Name" : {
-        "prefix" : "extractBrackets",
+{   
+    "flatChildren" : {
+        "prefix" : "flatChildren",
+        "body" : [
+            "const flatChildren = app.querySelectorAll('*');"
+            
+        ]
+    },
+
+    "bindPattern " : {
+        "prefix" : "bindPatternSkeleton",
+        "body" : [
+            "const bindPattern = 'z-bind:';",
+            "const bindSugarPattern = ':';",
+            "const attributeRegex = new RegExp(`${bindPattern}|${bindSugarPattern}`);"
+        ]
+    },
+
+    "extractBrackets" : {
+        "prefix" : "extractBracketsSkeleton",
         "body" : [
             "function extractBrackets(text) {",
-            "    const bracketRegex = /{{2}(.*?)\\}{2}/gi;",
+            "        const bracketRegex = /{{2}(.*?)\\}{2}/gi;",
             "",
             "    let template;",
             "    const templates = [];",
