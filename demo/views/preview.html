@@ -1,0 +1,26 @@
+<h2>Preview</h2>
+
+<div class="card">
+
+    <div class="card-content">
+        <div class="media">
+            <div class="media-left">
+                <figure class="image is-48x48">
+                    <img z-bind:src="avatar" alt="Placeholder image">
+                </figure>
+            </div>
+            <div class="media-content">
+                <p class="title is-4">{{firstname}} {{lastname}}</p>
+                <p class="subtitle is-6">{{twitter}}</p>
+            </div>
+        </div>
+
+        <div class="content">
+            {{firstname}} {{lastname}} |
+            <strong>{{age}}</strong>
+            <br> {{country}} / {{city}}
+            <br>
+            <i>{{street}}</i>
+        </div>
+    </div>
+</div>

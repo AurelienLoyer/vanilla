@@ -21,5 +21,23 @@
             "            }",
             "        })"
         ]
+    },
+
+    "navSkeleton" : {
+        "prefix" : "navSkeleton",
+        "body" : [
+            "<nav class=\"navbar is-light\" role=\"navigation\" aria-label=\"main navigation\">",
+            "            <div class=\"navbar-menu\">",
+            "                <a href=\"#edit\" class=\"navbar-item\">",
+            "                    Edit",
+            "                </a>",
+            "                <a href=\"#preview\" class=\"navbar-item\">",
+            "                    Preview",
+            "                </a>",
+            "            </div>",
+            "        </nav>",
+            "",
+            "        <div id=\"inner-page\"></div>"
+        ]
     }
 }

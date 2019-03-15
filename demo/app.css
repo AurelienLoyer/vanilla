@@ -15,3 +15,7 @@ h1, h2 {
 figure{
     margin:auto;
 }
+
+.navbar-menu {
+    display: block;
+}
