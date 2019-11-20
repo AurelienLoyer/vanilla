@@ -1,99 +1,114 @@
 <html xmlns:v-bind="http://www.w3.org/1999/xhtml">
+	<head>
+		<link rel="stylesheet" href="css/bulma.min.css" />
+		<link rel="stylesheet" href="css/app.css" />
+	</head>
 
-<head>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css" />
-    <link rel="stylesheet" href="app.css" />
-</head>
+	<body>
+		<h2>My Profile</h2>
 
-<body>
+		<div id="app">
+			<figure class="image is-96x96">
+				<img alt="dontforgetme" v-bind:src="avatar" />
+			</figure>
 
-    <h2>My Profile</h2>
+			<br />
 
-    <div id="app">
-        <figure class="image is-96x96">
-            <img alt="dontforgetme" v-bind:src="avatar" />
-        </figure>
+			<div class="field">
+				<label class="label">FirstName</label>
+				<input
+					class="input"
+					type="text"
+					placeholder="Text input"
+					v-bind:value="firstname"
+				/>
+				<p class="help is-danger">{{firstname_comment}}</p>
+			</div>
 
-        <br>
+			<div class="field">
+				<label class="label">Lastname</label>
+				<input
+					class="input is-success"
+					type="text"
+					placeholder="Text input"
+					v-bind:value="lastname"
+				/>
+			</div>
 
-        <div class="field">
-            <label class="label">FirstName</label>
-            <input class="input" type="text" placeholder="Text input" v-bind:value="firstname">
-            <p class="help is-danger">{{firstname_comment}}</p>
-        </div>
+			<div class="field">
+				<label class="label">Age</label>
+				<input
+					class="input is-danger"
+					type="number"
+					placeholder="Age input"
+					v-bind:value="age"
+				/>
+				<p class="help is-success">{{age_comment}}</p>
+			</div>
 
-        <div class="field">
-            <label class="label">Lastname</label>
-            <input class="input is-success" type="text" placeholder="Text input" v-bind:value="lastname">
-        </div>
+			<div class="field">
+				<label class="label">Description</label>
+				<div class="control">
+					<textarea class="textarea" placeholder="Textarea">
+{{description}}</textarea
+					>
+				</div>
+			</div>
 
-        <div class="field">
-            <label class="label">Age</label>
-            <input class="input is-danger" type="number" placeholder="Age input" v-bind:value="age">
-            <p class="help is-success">{{age_comment}}</p>
-        </div>
+			<h2>Preview</h2>
 
-        <div class="field">
-            <label class="label">Description</label>
-            <div class="control">
-                <textarea class="textarea" placeholder="Textarea">{{description}}</textarea>
-            </div>
-        </div>
+			<div class="card">
+				<div class="card-content">
+					<div class="media">
+						<div class="media-left">
+							<figure class="image is-48x48">
+								<img v-bind:src="avatar" alt="Placeholder image" />
+							</figure>
+						</div>
+						<div class="media-content">
+							<p class="title is-4">{{firstname}} {{lastname}}</p>
+							<p class="subtitle is-6">{{twitter}}</p>
+						</div>
+					</div>
 
-        <h2>Preview</h2>
+					<div class="content">
+						{{firstname}} {{lastname}} |
+						<strong>{{age}}</strong>
+						<br />
+						{{country}} / {{city}}
+						<br />
+						<i>{{street}}</i>
+					</div>
+				</div>
+			</div>
 
-        <div class="card">
+			<br />
 
-            <div class="card-content">
-                <div class="media">
-                    <div class="media-left">
-                        <figure class="image is-48x48">
-                            <img v-bind:src="avatar" alt="Placeholder image">
-                        </figure>
-                    </div>
-                    <div class="media-content">
-                        <p class="title is-4">{{firstname}} {{lastname}}</p>
-                        <p class="subtitle is-6">{{twitter}}</p>
-                    </div>
-                </div>
+			<div class="field is-grouped">
+				<div class="control">
+					<button class="button is-link">Save</button>
+				</div>
+				<div class="control">
+					<button class="button is-text">Cancel</button>
+				</div>
+			</div>
+		</div>
+		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 
-                <div class="content">
-                    {{firstname}} {{lastname}} |
-                    <strong>{{age}}</strong>
-                    <br> {{country}} / {{city}}
-                    <br>
-                    <i>{{street}}</i>
-                </div>
-            </div>
-        </div>
+		<script>
+			const req = new XMLHttpRequest();
+			req.open(
+				"GET",
+				"https://raw.githubusercontent.com/T3kstiil3/vanilla/master/data/user.json",
+				false
+			);
+			req.send(null);
+			let state = JSON.parse(req.responseText);
 
-        <br>
-
-        <div class="field is-grouped">
-            <div class="control">
-                <button class="button is-link">Save</button>
-            </div>
-            <div class="control">
-                <button class="button is-text">Cancel</button>
-            </div>
-        </div>
-
-    </div>
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-
-    <script>
-        const req = new XMLHttpRequest();
-        req.open('GET', 'http://aurelien-loyer.fr/vanilla/presentation/user.json', false);
-        req.send(null);
-        let state = JSON.parse(req.responseText);
-
-
-        new Vue({
-            el: '#app',
-            data: state,
-        });
-
-    </script>
-</body>
-
+			new Vue({
+				el: "#app",
+				data: state
+			});
+		</script>
+	</body>
 </html>

@@ -1,8 +1,8 @@
 <html xmlns:z-bind="http://www.w3.org/1999/xhtml">
 
 <head>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css" />
-    <link rel="stylesheet" href="app.css" />
+    <link rel="stylesheet" href="css/bulma.min.css" />
+    <link rel="stylesheet" href="css/app.css" />
 </head>
 
 <body>
@@ -85,7 +85,7 @@
     <script>
 
         const req = new XMLHttpRequest();
-        req.open('GET', 'http://aurelien-loyer.fr/vanilla/presentation/user.json', false);
+        req.open('GET', 'https://raw.githubusercontent.com/T3kstiil3/vanilla/master/data/user.json', false);
         req.send(null);
         const state = JSON.parse(req.responseText);
 

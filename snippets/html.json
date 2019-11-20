@@ -1,0 +1,43 @@
+{   
+    "XMLHttpRequest Skeleton" : {
+        "prefix" : "XMLHttpRequestSkeleton",
+        "body" : [
+            "const req = new XMLHttpRequest();",
+            "req.open('GET', 'https://raw.githubusercontent.com/T3kstiil3/vanilla/master/data/user.json', false);",
+            "req.send(null);",
+            "const state = JSON.parse(req.responseText);"
+        ]
+    },
+
+    "Proxy Skeleton" : {
+        "prefix" : "ProxySkeleton",
+        "body" : [
+            "new Proxy(state, {",
+            "            get: (target, key) => {",
+            "                return state[key];",
+            "            },",
+            "            set: (target, key, value) => {",
+            "                state[key] = value;",
+            "            }",
+            "        })"
+        ]
+    },
+
+    "navSkeleton" : {
+        "prefix" : "navSkeleton",
+        "body" : [
+            "<nav class=\"navbar is-light\" role=\"navigation\" aria-label=\"main navigation\">",
+            "            <div class=\"navbar-menu\">",
+            "                <a href=\"#edit\" class=\"navbar-item\">",
+            "                    Edit",
+            "                </a>",
+            "                <a href=\"#preview\" class=\"navbar-item\">",
+            "                    Preview",
+            "                </a>",
+            "            </div>",
+            "        </nav>",
+            "",
+            "        <div id=\"inner-page\"></div>"
+        ]
+    }
+}
