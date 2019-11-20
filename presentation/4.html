@@ -1,50 +1,53 @@
 <html xmlns:z-bind="http://www.w3.org/1999/xhtml">
+	<head>
+		<link rel="stylesheet" href="css/bulma.min.css" />
+		<link rel="stylesheet" href="css/app.css" />
+	</head>
 
-<head>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css" />
-    <link rel="stylesheet" href="app.css" />
-</head>
+	<body>
+		<div id="app">
+			<nav
+				class="navbar is-light"
+				role="navigation"
+				aria-label="main navigation"
+			>
+				<div class="navbar-menu">
+					<a href="#edit" class="navbar-item">
+						Edit
+					</a>
+					<a href="#preview" class="navbar-item">
+						Preview
+					</a>
+				</div>
+			</nav>
 
-<body>
+			<div id="inner-page"></div>
+		</div>
 
-    <div id="app">
+		<script src="2.js"></script>
+		<script src="router.js"></script>
 
-        <nav class="navbar is-light" role="navigation" aria-label="main navigation">
-            <div class="navbar-menu">
-                <a href="#edit" class="navbar-item">
-                    Edit
-                </a>
-                <a href="#preview" class="navbar-item">
-                    Preview
-                </a>
-            </div>
-        </nav>
+		<script>
+			const req = new XMLHttpRequest();
+			req.open(
+				"GET",
+				"https://raw.githubusercontent.com/T3kstiil3/vanilla/master/data/user.json",
+				false
+			);
+			req.send(null);
+			const state = JSON.parse(req.responseText);
 
-        <div id="inner-page"></div>
+			apply(document.getElementById("app"), state);
 
-    </div>
-
-    <script src="2.js"></script>
-    <script src="router.js"></script>
-
-    <script>
-        const req = new XMLHttpRequest();
-        req.open('GET', 'http://aurelien-loyer.fr/vanilla/presentation/user.json', false);
-        req.send(null);
-        const state = JSON.parse(req.responseText);
-
-        apply(document.getElementById('app'), state);
-
-        const state2 = new Proxy(state, {
-            get: (target, key) => {
-                return state[key];
-            },
-            set: (target, key, value) => {
-                state[key] = value;
-                apply(document.getElementById('app'), state);
-            }
-        })
-    </script>
-</body>
-
+			const state2 = new Proxy(state, {
+				get: (target, key) => {
+					return state[key];
+				},
+				set: (target, key, value) => {
+					state[key] = value;
+					apply(document.getElementById("app"), state);
+				}
+			});
+		</script>
+	</body>
 </html>

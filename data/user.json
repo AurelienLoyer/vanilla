@@ -6,8 +6,8 @@
     "description": "Interpolation here",
     "age": 39,
     "age_comment": "You're young !",
-    "country": "Canada",
-    "city": "Montreal",
-    "street": "900 Rue de la Gauchetière",
-    "avatar": "https://cdn.iconscout.com/icon/free/png-256/avatar-375-456327.png"
+    "country": "France",
+    "city": "Lille",
+    "street": "Place Augustin Laurent",
+    "avatar": "https://raw.githubusercontent.com/T3kstiil3/vanilla/master/data/avatar-2.png"
 }
