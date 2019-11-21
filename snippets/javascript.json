@@ -1,15 +1,15 @@
-{   
-    "flatChildren" : {
-        "prefix" : "flatChildren",
-        "body" : [
+{
+    "flatChildren": {
+        "prefix": "flatChildren",
+        "body": [
             "const flatChildren = app.querySelectorAll('*');"
-            
+
         ]
     },
 
-    "bindPattern " : {
-        "prefix" : "bindPatternSkeleton",
-        "body" : [
+    "bindPattern ": {
+        "prefix": "bindPatternSkeleton",
+        "body": [
             "const bindPattern = 'z-bind:';",
             "const bindSugarPattern = ':';",
             "const attributeRegex = new RegExp(`${bindPattern}|${bindSugarPattern}`);",
@@ -17,9 +17,23 @@
         ]
     },
 
-    "extractBrackets" : {
-        "prefix" : "extractBracketsSkeleton",
-        "body" : [
+    "qwertyProblem ": {
+        "prefix": "qwertyProblem",
+        "body": [
+            "flatChildren.forEach((element) => {",
+            "   Object.values(element.attributes).forEach((attribute) => {",
+            "       if (attributeRegex.test(attribute.localName)) {",
+            "           const attributeName = attribute.localName.replace(attributeRegex, '')",
+            "           element.setAttribute(attributeName, state[attribute.value]);",
+            "       }",
+            "   })",
+            "});"
+        ]
+    },
+
+    "extractBrackets": {
+        "prefix": "extractBracketsSkeleton",
+        "body": [
             "function extractBrackets(text) {",
             "        const bracketRegex = /{{2}(.*?)\\}{2}/gi;",
             "",
@@ -41,9 +55,9 @@
         ]
     },
 
-    "routerSkeleton" : {
-        "prefix" : "routerSkeleton",
-        "body" : [
+    "routerSkeleton": {
+        "prefix": "routerSkeleton",
+        "body": [
             "window.onhashchange = () => {",
             "    const pageName = window.location.hash.substr(1);",
             "    loadPage(pageName);",
